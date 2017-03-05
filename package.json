@@ -3,7 +3,8 @@
   "description": "help your android team became more productive",
   "scripts": {
     "dev": "node tasks/runner.js",
-    "build": "npm run pack && build --dir",
+    "build": "npm run pack && build",
+    "build:dir": "npm run pack && build --dir",
     "release": "npm run pack && build",
     "pack-all": "build -mwl",
     "pack-unix": "build -ml",

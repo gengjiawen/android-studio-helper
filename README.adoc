@@ -1,4 +1,4 @@
-= Android TeamHelper
+= Android Studio Helper
 Geng Jiawen
 techinicalcute@Gmail.com
 :toc:
@@ -6,6 +6,8 @@ techinicalcute@Gmail.com
 :sectnums:
 :sectnumlevels: 2
 :source-highlighter: hightlightjs
+
+image:https://travis-ci.org/gengjiawen/android-studio-helper.svg?branch=master["Build Status", link="https://travis-ci.org/gengjiawen/android-studio-helper"]
 
 This is a helper app for android dev team.
 You can use it to deploy templates, module templates and plugins (todo) with easy.
