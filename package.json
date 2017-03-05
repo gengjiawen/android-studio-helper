@@ -1,6 +1,5 @@
 {
   "name": "android-studio-helper",
-  "version": "1.0.1",
   "description": "help your android team became more productive",
   "scripts": {
     "dev": "node tasks/runner.js",
