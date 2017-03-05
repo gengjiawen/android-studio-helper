@@ -7,6 +7,8 @@ techinicalcute@Gmail.com
 :sectnumlevels: 2
 :source-highlighter: hightlightjs
 
+image:https://ci.appveyor.com/api/projects/status/i5yup751g7haetoo/branch/master?svg=true[Build status,link=https://ci.appveyor.com/project/gengjiawen/android-studio-helper/branch/master]
+
 image:https://travis-ci.org/gengjiawen/android-studio-helper.svg?branch=master["Build Status", link="https://travis-ci.org/gengjiawen/android-studio-helper"]
 
 This is a helper app for android dev team.
