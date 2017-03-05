@@ -1,0 +1,11 @@
+= Android TeamHelper
+Geng Jiawen
+techinicalcute@Gmail.com
+:toc:
+:toclevels: 3
+:sectnums:
+:sectnumlevels: 2
+:source-highlighter: hightlightjs
+
+This is a helper app for android dev team.
+You can use it to deploy templates, module templates and plugins (todo) with easy.
