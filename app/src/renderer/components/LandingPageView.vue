@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1>Welcome.</h1>
-    <p>{{assetDir}}</p>
     <div id="choose">
       <input id="user-dir" type="text" placeholder="choose you custom install location" v-model="studioDir">
       <button id="chooseDir" type="submit" @click="openDir">Choose</button>
