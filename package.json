@@ -54,7 +54,8 @@
     },
     "linux": {
       "target": [
-        "AppImage"
+        "AppImage",
+        "deb"
       ]
     },
     "extraResources": [
