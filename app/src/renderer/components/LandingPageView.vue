@@ -1,13 +1,13 @@
 <template>
   <div>
     <div id="choose">
-      <input id="user-dir" type="text" placeholder="choose you custom install location" v-model="studioDir">
-      <button id="chooseDir" type="submit" @click="openDir">Choose</button>
+      <input v-if="notMacOs" type="text" placeholder="choose you custom install location" v-model="studioDir">
+      <button type="submit" @click="openDir">Choose</button>
     </div>
     <div id="deploy">
       <button class="button" type="submit" @click="deployTimber">Deploy Timber</button>
       <button class="button" type="submit" @click="deployTemplates">Deploy Template</button>
-      <button  class="button" type="submit">Deploy Plugin</button>
+      <button class="button" type="submit">Deploy Plugin</button>
     </div>
   </div>
 </template>
@@ -25,7 +25,8 @@
     data () {
       return {
         studioDir: '',
-        assetDir: fileutil.getAssetDir()
+        assetDir: fileutil.getAssetDir(),
+        notMacOs: process.platform !== 'darwin'
       }
     },
 
