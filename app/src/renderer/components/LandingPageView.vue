@@ -7,7 +7,7 @@
     <div id="deploy">
       <button class="button" type="submit" @click="deployTimber">Deploy Timber</button>
       <button class="button" type="submit" @click="deployTemplates">Deploy Template</button>
-      <button class="button" type="submit">Deploy Plugin</button>
+      <!--<button class="button" type="submit">Deploy Plugin</button>-->
     </div>
   </div>
 </template>
