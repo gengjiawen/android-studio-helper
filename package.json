@@ -23,6 +23,7 @@
     "postinstall": "npm run lint:fix && cd app && npm install"
   },
   "build": {
+    "productName": "AndroidStudioHelper",
     "title": "android-studio-helper",
     "appId": "com.gengjiawen.android",
     "category": "productivity",
