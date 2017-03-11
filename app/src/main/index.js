@@ -1,7 +1,7 @@
 'use strict'
 
-import { app, BrowserWindow, Menu} from 'electron'
-import {menu} from "./menu";
+import {app, BrowserWindow, Menu} from 'electron'
+import {menu} from './menu'
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
