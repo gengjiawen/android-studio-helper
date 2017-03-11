@@ -13,6 +13,8 @@ image:https://travis-ci.org/gengjiawen/android-studio-helper.svg?branch=master["
 This is a helper app for android dev team.
 You can use it to deploy templates, module templates and plugins (todo) with easy.
 
+image:arts\look.png[]
+
 ## What's it for
 It's mainly for how you can deploy android studio custom file template easily.For more information: check here: https://riggaroo.co.za/custom-file-template-group-android-studiointellij/.
 
