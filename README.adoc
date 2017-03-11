@@ -8,8 +8,41 @@ techinicalcute@Gmail.com
 :source-highlighter: hightlightjs
 
 image:https://ci.appveyor.com/api/projects/status/i5yup751g7haetoo/branch/master?svg=true[Build status,link=https://ci.appveyor.com/project/gengjiawen/android-studio-helper/branch/master]
-
 image:https://travis-ci.org/gengjiawen/android-studio-helper.svg?branch=master["Build Status", link="https://travis-ci.org/gengjiawen/android-studio-helper"]
 
 This is a helper app for android dev team.
 You can use it to deploy templates, module templates and plugins (todo) with easy.
+
+## What's it for
+It's mainly for how you can deploy android studio custom file template easily.For more information: check here: https://riggaroo.co.za/custom-file-template-group-android-studiointellij/.
+
+### Other Function
+we have a timber cookie, if you are using https://github.com/JakeWharton/timber[timber], I think you will like this feature.
+It acts like **settings>live templates>Android Log**
+image::arts/timber.gif[Timber]
+
+## How do I use
+put your custom templates file in **app\src\renderer\assets**, and build the application.Then build the application.
+
+## Build Setup
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:9080
+npm run dev
+
+# build electron app for production
+npm run build
+
+# lint all JS/Vue component files in `app/src`
+npm run lint
+
+# run webpack in production
+npm run pack
+```
+
+## License
+http://opensource.org/licenses/MIT[MIT]
+
+Copyright (c) 2017-present, Jiawen (Daniel) Geng
