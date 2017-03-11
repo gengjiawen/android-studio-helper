@@ -18,8 +18,8 @@ It's mainly for how you can deploy android studio custom file template easily.Fo
 
 ### Other Function
 we have a timber cookie, if you are using https://github.com/JakeWharton/timber[timber], I think you will like this feature.
-It acts like **settings>live templates>Android Log**
-image:arts/timber.gif[Timber]
+It acts like **settings>live templates>Android Log**.
+Interested, check this image https://github.com/gengjiawen/android-studio-helper/blob/master/arts/timber.gif[click me]
 
 ## How do I use
 put your custom templates file in **app\src\renderer\assets**, and build the application.Then build the application.
