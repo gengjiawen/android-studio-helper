@@ -1,6 +1,7 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu} from 'electron'
+import {menu} from "./menu";
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
@@ -24,6 +25,8 @@ function createWindow () {
 
   // eslint-disable-next-line no-console
   console.log('mainWindow opened')
+
+  Menu.setApplicationMenu(menu)
 }
 
 app.on('ready', createWindow)
