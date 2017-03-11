@@ -24,7 +24,6 @@
   },
   "build": {
     "productName": "AndroidStudioHelper",
-    "title": "android-studio-helper",
     "appId": "com.gengjiawen.android",
     "category": "productivity",
     "dmg": {
