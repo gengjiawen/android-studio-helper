@@ -1,11 +1,14 @@
 <template>
   <div>
+    <div>
+      <button class="button" type="submit" @click="deployTimber">Deploy Timber</button>
+      <button class="button" type="submit" @click="deployDBTools">Deploy Database tools For Webstorm</button>
+    </div>
     <div id="choose" v-if="notMacOs">
       <input type="text" placeholder="choose you custom install location" v-model="studioDir">
       <button type="submit" @click="openDir">Choose</button>
     </div>
     <div id="deploy">
-      <button class="button" type="submit" @click="deployTimber">Deploy Timber</button>
       <button class="button" type="submit" @click="deployTemplates">Deploy Template</button>
       <!--<button class="button" type="submit">Deploy Plugin</button>-->
     </div>
@@ -90,6 +93,30 @@
           console.log(err)
           remote.dialog.showErrorBox('Sorry, something went wrong :(', String(err))
         }
+      },
+      deployDBTools () {
+        let pluginDir = path.join(os.homedir(), 'Library/Application Support')
+        if (process.platform !== 'darwin') {
+          pluginDir = os.homedir()
+        }
+
+        fileutil.getDirsByRe(pluginDir, /WebStorm.*/g).forEach(f => {
+          let start = path.join(fileutil.getAssetDir(), 'plugins/DatabaseTools')
+          let end = path.join(f, 'DatabaseTools')
+          if (process.platform !== 'darwin') {
+            end = path.join(f, 'config/plugins', 'DatabaseTools')
+          }
+
+          console.log(util.format('copying from %s to %s', start, end))
+          try {
+            fs.copySync(start, end)
+            console.log(util.format('copying from %s to %s', start, end))
+            new Notification('Congratulations', {body: 'Timber deploy done'})
+          } catch (err) {
+            console.log(err)
+            remote.dialog.showErrorBox('Sorry, something went wrong :(', String(err))
+          }
+        })
       }
     }
 
