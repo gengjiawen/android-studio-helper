@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div id="choose">
-      <input v-if="notMacOs" type="text" placeholder="choose you custom install location" v-model="studioDir">
+    <div id="choose" v-if="notMacOs">
+      <input type="text" placeholder="choose you custom install location" v-model="studioDir">
       <button type="submit" @click="openDir">Choose</button>
     </div>
     <div id="deploy">
