@@ -111,7 +111,7 @@
           try {
             fs.copySync(start, end)
             console.log(util.format('copying from %s to %s', start, end))
-            new Notification('Congratulations', {body: 'Timber deploy done'})
+            new Notification('Congratulations', {body: 'Plugin has been deploy, please restart your IDE'})
           } catch (err) {
             console.log(err)
             remote.dialog.showErrorBox('Sorry, something went wrong :(', String(err))
