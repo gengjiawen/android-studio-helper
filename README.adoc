@@ -24,10 +24,6 @@ we have a timber cookie, if you are using https://github.com/JakeWharton/timber[
 It acts like **settings>live templates>Android Log**.
 Interested, check this image https://github.com/gengjiawen/android-studio-helper/blob/master/arts/timber.gif[click me]
 
-### Deploy Webstorm Database Tools
-check this issue https://youtrack.jetbrains.com/issue/WEB-13293.
-How to use : https://www.jetbrains.com/help/idea/2017.1/database-tool-window.html.
-
 ## How do I use
 put your custom templates file in **app\src\renderer\assets**, and build the application.Then build the application.
 

@@ -2,7 +2,7 @@
   <div>
     <div>
       <button class="button" type="submit" @click="deployTimber">Deploy Timber</button>
-      <button class="button" type="submit" @click="deployDBTools">Deploy Database tools For Webstorm</button>
+      <!--<button class="button" type="submit" @click="deployDBTools">Deploy Database tools For Webstorm</button>-->
     </div>
     <div id="choose" v-if="notMacOs">
       <input type="text" placeholder="choose you custom install location" v-model="studioDir">
