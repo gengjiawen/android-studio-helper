@@ -80,6 +80,9 @@ const template = [
     role: 'help',
     submenu: [
       {
+        label: 'about'
+      },
+      {
         label: 'Learn More',
         click () { shell.openExternal('https://github.com/gengjiawen/android-studio-helper') }
       }
