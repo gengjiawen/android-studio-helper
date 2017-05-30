@@ -1,24 +1,34 @@
 <template>
   <div>
-    <div>
-      <button class="button" type="submit" @click="deployTimber">Deploy Timber</button>
-      <!--<button class="button" type="submit" @click="deployDBTools">Deploy Database tools For Webstorm</button>-->
+    <div class="util">
+      <h2>Util</h2>
+      <div>
+        <el-button class="button" type="submit" @click="deployTimber">Deploy Timber</el-button>
+        <el-button type="text" @href="timberLink" @click="openTimber">Learn more</el-button>
+      </div>
     </div>
-    <div id="choose" v-if="notMacOs">
-      <input type="text" placeholder="choose you custom install location" v-model="studioDir">
-      <button type="submit" @click="openDir">Choose</button>
+
+    <div class="templates">
+      <h2>Templates</h2>
+      <el-input type="text" placeholder="Choose you Android Studio install location" v-model="studioDir" v-if="notMacOs">
+            <template slot="append">
+              <el-button type="submit" @click="openDir">Choose</el-button>
+            </template>
+      </el-input>
+      <el-button class="button" type="submit" @click="deployTemplates">Deploy Template</el-button>
     </div>
-    <div id="deploy">
-      <button class="button" type="submit" @click="deployTemplates">Deploy Template</button>
+
+    <div class="deploy">
       <!--<button class="button" type="submit">Deploy Plugin</button>-->
     </div>
+
   </div>
 </template>
 
 <script>
   /* eslint-disable no-new */
 
-  import {remote} from 'electron'
+  import {remote, shell} from 'electron'
   import fs from 'fs-extra'
   import path from 'path'
   import util from 'util'
@@ -29,6 +39,7 @@
       return {
         studioDir: '',
         assetDir: fileutil.getAssetDir(),
+        timberLink: 'https://github.com/JakeWharton/timber/issues/173',
         notMacOs: process.platform !== 'darwin'
       }
     },
@@ -43,6 +54,10 @@
             console.log('not choose dir')
           }
         })
+      },
+  
+      openTimber () {
+        shell.openExternal(this.timberLink)
       },
 
       deployTimber () {
@@ -123,5 +138,17 @@
   }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
+
+.util, .templates
+  display flex
+  flex-direction column
+  margin 20px
+
+.templates
+  justify-content space-around
+  .el-input
+    margin-top 10px
+    margin-bottom  10px
+
 </style>
