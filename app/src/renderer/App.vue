@@ -23,7 +23,6 @@
   body { height: 100%; }
 
   body {
-    align-items: center;
     background:
       radial-gradient(
         ellipse at center,
@@ -32,8 +31,6 @@
       );
     background-position: center;
     display: flex;
-    font-family: Lato, Helvetica, sans-serif;
-    justify-content: center;
-    text-align: center;
+    font-family: Helvetica, sans-serif;
   }
 </style>
