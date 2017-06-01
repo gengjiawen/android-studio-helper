@@ -3,7 +3,7 @@
   "description": "help your android team became more productive",
   "scripts": {
     "dev": "node tasks/runner.js",
-    "both-dev": "nodemon --delay 5 -w app/src/main tasks/runner.js",
+    "both-dev": "nodemon --delay 2 -w app/src/main tasks/runner.js",
     "build:dir": "npm run pack && build --dir",
     "dist": "npm run pack && build",
     "release": "npm run pack && build",
@@ -19,6 +19,7 @@
     "pack:renderer": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack.renderer.config.js",
     "test": "npm run unit && npm run e2e",
     "unit": "cross-env BABEL_ENV=testing-unit karma start test/unit/karma.conf.js",
+    "re-npm": "rimraf node_modules && cnpm install",
     "postinstall": "npm run lint:fix && cd app && npm install"
   },
   "build": {
@@ -107,6 +108,7 @@
     "mocha": "^3.4.2",
     "nodemon": "^1.11.0",
     "require-dir": "^0.3.1",
+    "rimraf": "^2.6.1",
     "spectron": "^3.6.4",
     "style-loader": "^0.18.1",
     "tree-kill": "^1.1.0",
