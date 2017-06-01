@@ -1,4 +1,4 @@
-import {app, Menu, shell} from 'electron'
+import {app, Menu, shell, dialog} from 'electron'
 
 const template = [
   {
@@ -80,7 +80,8 @@ const template = [
     role: 'help',
     submenu: [
       {
-        label: 'about'
+        label: 'About',
+        click () { openAboutDialog() }
       },
       {
         label: 'Learn More',
@@ -89,6 +90,21 @@ const template = [
     ]
   }
 ]
+
+function openAboutDialog () {
+  const info = `Version ${app.getVersion()}
+Electron ${process.versions['electron']}
+Renderer ${process.versions['chrome']}
+Node ${process.versions['node']}`
+
+  dialog.showMessageBox({
+    title: 'Android Studio Helper',
+    type: 'info',
+    message: `${app.getName()}`,
+    detail: info,
+    noLink: true
+  })
+}
 
 if (process.platform === 'darwin') {
   template.unshift({
