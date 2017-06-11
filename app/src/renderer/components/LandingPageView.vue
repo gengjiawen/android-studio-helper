@@ -52,6 +52,7 @@ import os from 'os'
 import * as fileutil from '../utils/file-util'
 import {getTemplateDir} from '../utils/JetbrainsUtil'
 import download from 'download-git-repo'
+import { STUDIO_DIR } from '../utils/Constants'
 export default {
   data () {
     return {
@@ -61,6 +62,9 @@ export default {
       todo: '',
       notMacOs: process.platform !== 'darwin'
     }
+  },
+  created () {
+    this.studioDir = localStorage.getItem(STUDIO_DIR)
   },
 
   methods: {
@@ -111,6 +115,7 @@ export default {
       let desDir = getTemplateDir(this.studioDir)
       let repo = this.todo
       console.log(desDir)
+      localStorage.setItem(STUDIO_DIR, this.studioDir)
       download(repo, desDir, function (err) {
         if (err) {
           remote.dialog.showErrorBox('Sorry, something went wrong :(', String(err))
