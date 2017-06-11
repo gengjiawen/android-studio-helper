@@ -25,7 +25,8 @@ It acts like **settings>live templates>Android Log**.
 Interested, check this image https://github.com/gengjiawen/android-studio-helper/blob/master/arts/timber.gif[click me]
 
 ## How do I use
-put your custom templates file in **app\src\renderer\assets**, and build the application.Then build the application.
+Input your template url, this is achieve by https://github.com/flipxfx/download-git-repo.
+For inner bundle put your custom templates file in **app\src\renderer\assets**, and build the application.
 
 ## Build Setup
 ``` bash
