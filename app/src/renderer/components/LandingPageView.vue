@@ -49,7 +49,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import util from 'util'
 import os from 'os'
-import * as fileutil from '../utils/file-util'
+import * as FileUtil from '../utils/FileUtil'
 import {getTemplateDir} from '../utils/JetbrainsUtil'
 import download from 'download-git-repo'
 import { STUDIO_DIR } from '../utils/Constants'
@@ -57,7 +57,7 @@ export default {
   data () {
     return {
       studioDir: '',
-      assetDir: fileutil.getAssetDir(),
+      assetDir: FileUtil.getAssetDir(),
       timberLink: 'https://github.com/JakeWharton/timber/issues/173',
       todo: '',
       notMacOs: process.platform !== 'darwin'
@@ -93,8 +93,8 @@ export default {
         configDir = os.homedir()
       }
 
-      fileutil.getDirsByRe(configDir, /AndroidStudio.*/g).forEach(f => {
-        let timber = path.join(fileutil.getAssetDir(), 'liveTemplates')
+      FileUtil.getDirsByRe(configDir, /AndroidStudio.*/g).forEach(f => {
+        let timber = path.join(FileUtil.getAssetDir(), 'liveTemplates')
         let end = path.join(f, 'templates')
         if (process.platform !== 'darwin') {
           end = path.join(f, 'config/templates')
@@ -128,7 +128,7 @@ export default {
       let desDir = getTemplateDir(this.studioDir)
 
       try {
-        fileutil.getDirsByRe(path.join(fileutil.getAssetDir(), 'templates')).forEach(p => {
+        FileUtil.getDirsByRe(path.join(FileUtil.getAssetDir(), 'templates')).forEach(p => {
           let start = p
           let end = path.join(desDir, path.basename(p))
           console.log(util.format('copying from %s to %s', start, end))
@@ -146,8 +146,8 @@ export default {
         pluginDir = os.homedir()
       }
 
-      fileutil.getDirsByRe(pluginDir, /WebStorm.*/g).forEach(f => {
-        let start = path.join(fileutil.getAssetDir(), 'plugins/DatabaseTools')
+      FileUtil.getDirsByRe(pluginDir, /WebStorm.*/g).forEach(f => {
+        let start = path.join(FileUtil.getAssetDir(), 'plugins/DatabaseTools')
         let end = path.join(f, 'DatabaseTools')
         if (process.platform !== 'darwin') {
           end = path.join(f, 'config/plugins', 'DatabaseTools')
@@ -181,7 +181,5 @@ export default {
   .el-input
     margin-top 10px
     margin-bottom  10px
-  .div
-    display block
 
 </style>
