@@ -18,9 +18,7 @@
       <el-button class="button" type="submit" @click="deployTemplates">Deploy Template</el-button>
     </div>
 
-    <div class="deploy">
-      <!--<button class="button" type="submit">Deploy Plugin</button>-->
-    </div>
+    <!--<button class="button" type="submit">Deploy Plugin</button>-->
 
   </div>
 </template>
@@ -67,16 +65,16 @@
         }
 
         fileutil.getDirsByRe(configDir, /AndroidStudio.*/g).forEach(f => {
-          let start = path.join(fileutil.getAssetDir(), 'liveTemplates/Timber.xml')
-          let end = path.join(f, 'templates/Timber.xml')
+          let timber = path.join(fileutil.getAssetDir(), 'liveTemplates')
+          let end = path.join(f, 'templates')
           if (process.platform !== 'darwin') {
-            end = path.join(f, 'config/templates/Timber.xml')
+            end = path.join(f, 'config/templates')
           }
 
-          console.log(util.format('copying from %s to %s', start, end))
+          console.log(util.format('copying from %s to %s', timber, end))
           try {
-            fs.copySync(start, end)
-            console.log(util.format('copying from %s to %s', start, end))
+            fs.copySync(timber, end)
+            console.log(util.format('copying from %s to %s', timber, end))
             new Notification('Congratulations', {body: 'Timber deploy done'})
           } catch (err) {
             console.log(err)
