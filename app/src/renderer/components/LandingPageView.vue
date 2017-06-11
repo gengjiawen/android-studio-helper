@@ -10,12 +10,28 @@
 
     <div class="templates">
       <h2>Templates</h2>
-      <el-input type="text" placeholder="Choose you Android Studio install location" v-model="studioDir" v-if="notMacOs">
-            <template slot="append">
-              <el-button type="submit" @click="openDir">Choose</el-button>
-            </template>
-      </el-input>
-      <el-button class="button" type="submit" @click="deployTemplates">Deploy Template</el-button>
+      <div v-if="notMacOs">
+        <h3>Choose your Android Studio Install Location</h3>
+        <el-input type="text" placeholder="Choose you Android Studio install location" v-model="studioDir" >
+          <template slot="append">
+            <el-button type="submit" @click="openDir">Choose</el-button>
+          </template>
+        </el-input>
+      </div>
+
+      <div>
+        <h3>Choose your template</h3>
+        <el-input type="text" placeholder="Please input your template, like riggaroo/android-studio-group-templates-mvp"
+                  v-model="todo">
+          <template slot="append">
+            <el-button type="submit" @click="deployTemplate">Deploy</el-button>
+          </template>
+        </el-input>
+      </div>
+
+      <!--<div>-->
+        <!--<el-button class="button" type="submit" @click="deployTemplates">Deploy Inner Template</el-button>-->
+      <!--</div>-->
     </div>
 
     <!--<button class="button" type="submit">Deploy Plugin</button>-->
@@ -24,116 +40,121 @@
 </template>
 
 <script>
-  /* eslint-disable no-new */
+/* eslint-disable no-new */
+import {remote, shell} from 'electron'
+import fs from 'fs-extra'
+import path from 'path'
+import util from 'util'
+import os from 'os'
+import * as fileutil from '../utils/file-util'
+import {getTemplateDir} from '../utils/JetbrainsUtil'
+import download from 'download-git-repo'
+export default {
+  data () {
+    return {
+      studioDir: '',
+      assetDir: fileutil.getAssetDir(),
+      timberLink: 'https://github.com/JakeWharton/timber/issues/173',
+      todo: '',
+      notMacOs: process.platform !== 'darwin'
+    }
+  },
 
-  import {remote, shell} from 'electron'
-  import fs from 'fs-extra'
-  import path from 'path'
-  import util from 'util'
-  import os from 'os'
-  import * as fileutil from '../utils/file-util'
-  export default {
-    data () {
-      return {
-        studioDir: '',
-        assetDir: fileutil.getAssetDir(),
-        timberLink: 'https://github.com/JakeWharton/timber/issues/173',
-        notMacOs: process.platform !== 'darwin'
-      }
+  methods: {
+    openDir () {
+      remote.dialog.showOpenDialog({properties: ['openDirectory']}, dir => {
+        console.log(dir)
+        if (!(typeof dir === 'undefined' || dir === null)) {
+          this.studioDir = dir[0]
+        } else {
+          console.log('not choose dir')
+        }
+      })
     },
 
-    methods: {
-      openDir () {
-        remote.dialog.showOpenDialog({properties: ['openDirectory']}, dir => {
-          console.log(dir)
-          if (!(typeof dir === 'undefined' || dir === null)) {
-            this.studioDir = dir[0]
-          } else {
-            console.log('not choose dir')
-          }
-        })
-      },
-  
-      openTimber () {
-        shell.openExternal(this.timberLink)
-      },
+    openTimber () {
+      shell.openExternal(this.timberLink)
+    },
 
-      deployTimber () {
-        let configDir = path.join(os.homedir(), 'Library/Preferences')
+    deployTimber () {
+      let configDir = path.join(os.homedir(), 'Library/Preferences')
+      if (process.platform !== 'darwin') {
+        configDir = os.homedir()
+      }
+
+      fileutil.getDirsByRe(configDir, /AndroidStudio.*/g).forEach(f => {
+        let timber = path.join(fileutil.getAssetDir(), 'liveTemplates')
+        let end = path.join(f, 'templates')
         if (process.platform !== 'darwin') {
-          configDir = os.homedir()
+          end = path.join(f, 'config/templates')
         }
 
-        fileutil.getDirsByRe(configDir, /AndroidStudio.*/g).forEach(f => {
-          let timber = path.join(fileutil.getAssetDir(), 'liveTemplates')
-          let end = path.join(f, 'templates')
-          if (process.platform !== 'darwin') {
-            end = path.join(f, 'config/templates')
-          }
-
-          console.log(util.format('copying from %s to %s', timber, end))
-          try {
-            fs.copySync(timber, end)
-            console.log(util.format('copying from %s to %s', timber, end))
-            new Notification('Congratulations', {body: 'Timber deploy done'})
-          } catch (err) {
-            console.log(err)
-            remote.dialog.showErrorBox('Sorry, something went wrong :(', String(err))
-          }
-        })
-      },
-
-      deployTemplates () {
-        let desDir = '/Applications/Android Studio.app/Contents/plugins/android/lib/templates/other'
-        if (process.platform !== 'darwin') {
-          console.log(this.studioDir)
-          if (this.studioDir.trim() === '') {
-            remote.dialog.showErrorBox(`Studio Directory isn't valid`, `Please choose a valid directory`)
-            return
-          }
-          desDir = path.join(this.studioDir, 'plugins/android/lib/templates/other')
-        }
-
+        console.log(util.format('copying from %s to %s', timber, end))
         try {
-          fileutil.getDirsByRe(path.join(fileutil.getAssetDir(), 'templates')).forEach(p => {
-            let start = p
-            let end = path.join(desDir, path.basename(p))
-            console.log(util.format('copying from %s to %s', start, end))
-            fs.copySync(start, end)
-          })
-          new Notification('Congratulations', {body: 'MVP pattern deploy done'})
+          fs.copySync(timber, end)
+          console.log(util.format('copying from %s to %s', timber, end))
+          new Notification('Congratulations', {body: 'Timber deploy done'})
         } catch (err) {
           console.log(err)
           remote.dialog.showErrorBox('Sorry, something went wrong :(', String(err))
         }
-      },
-      deployDBTools () {
-        let pluginDir = path.join(os.homedir(), 'Library/Application Support')
+      })
+    },
+    deployTemplate () {
+      let desDir = getTemplateDir(this.studioDir)
+      let repo = this.todo
+      console.log(desDir)
+      download(repo, desDir, function (err) {
+        if (err) {
+          remote.dialog.showErrorBox('Sorry, something went wrong :(', String(err))
+        } else {
+          new Notification('Congratulations', {body: 'Deploy template done'})
+        }
+      })
+    },
+    deployTemplates () {
+      let desDir = getTemplateDir(this.studioDir)
+
+      try {
+        fileutil.getDirsByRe(path.join(fileutil.getAssetDir(), 'templates')).forEach(p => {
+          let start = p
+          let end = path.join(desDir, path.basename(p))
+          console.log(util.format('copying from %s to %s', start, end))
+          fs.copySync(start, end)
+        })
+        new Notification('Congratulations', {body: 'MVP pattern deploy done'})
+      } catch (err) {
+        console.log(err)
+        remote.dialog.showErrorBox('Sorry, something went wrong :(', String(err))
+      }
+    },
+    deployDBTools () {
+      let pluginDir = path.join(os.homedir(), 'Library/Application Support')
+      if (process.platform !== 'darwin') {
+        pluginDir = os.homedir()
+      }
+
+      fileutil.getDirsByRe(pluginDir, /WebStorm.*/g).forEach(f => {
+        let start = path.join(fileutil.getAssetDir(), 'plugins/DatabaseTools')
+        let end = path.join(f, 'DatabaseTools')
         if (process.platform !== 'darwin') {
-          pluginDir = os.homedir()
+          end = path.join(f, 'config/plugins', 'DatabaseTools')
         }
 
-        fileutil.getDirsByRe(pluginDir, /WebStorm.*/g).forEach(f => {
-          let start = path.join(fileutil.getAssetDir(), 'plugins/DatabaseTools')
-          let end = path.join(f, 'DatabaseTools')
-          if (process.platform !== 'darwin') {
-            end = path.join(f, 'config/plugins', 'DatabaseTools')
-          }
-
+        console.log(util.format('copying from %s to %s', start, end))
+        try {
+          fs.copySync(start, end)
           console.log(util.format('copying from %s to %s', start, end))
-          try {
-            fs.copySync(start, end)
-            console.log(util.format('copying from %s to %s', start, end))
-            new Notification('Congratulations', {body: 'Plugin has been deploy, please restart your IDE'})
-          } catch (err) {
-            console.log(err)
-            remote.dialog.showErrorBox('Sorry, something went wrong :(', String(err))
-          }
-        })
-      }
+          new Notification('Congratulations', {body: 'Plugin has been deploy, please restart your IDE'})
+        } catch (err) {
+          console.log(err)
+          remote.dialog.showErrorBox('Sorry, something went wrong :(', String(err))
+        }
+      })
     }
-
   }
+
+}
 </script>
 
 <style lang="stylus" scoped>
