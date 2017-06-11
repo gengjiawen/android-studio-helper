@@ -24,12 +24,15 @@
           <b>Input your template</b>
           <el-button type="text" @click="openTemplate">Click me to Learn more about Template</el-button>
         </div>
-        <el-input type="text" placeholder="Please input your template, like riggaroo/android-studio-group-templates-mvp"
-                  v-model="todo">
+        <el-autocomplete
+                class="inline-input"
+                placeholder="Please input your template, like riggaroo/android-studio-group-templates-mvp"
+                :fetch-suggestions="querySearch"
+                v-model="todo">
           <template slot="append">
             <el-button type="submit" @click="deployTemplate">Deploy</el-button>
           </template>
-        </el-input>
+        </el-autocomplete>
       </div>
 
       <!--<div>-->
@@ -52,6 +55,7 @@ import os from 'os'
 import * as FileUtil from '../utils/FileUtil'
 import {getTemplateDir} from '../utils/JetbrainsUtil'
 import download from 'download-git-repo'
+import RepoDB from '../data/RepoDB'
 import { STUDIO_DIR } from '../utils/Constants'
 export default {
   data () {
@@ -60,6 +64,7 @@ export default {
       assetDir: FileUtil.getAssetDir(),
       timberLink: 'https://github.com/JakeWharton/timber/issues/173',
       todo: '',
+      db: RepoDB,
       notMacOs: process.platform !== 'darwin'
     }
   },
@@ -78,7 +83,18 @@ export default {
         }
       })
     },
-
+    querySearch (queryString, cb) {
+      this.db.repos
+        .toArray()
+        .then(links => {
+          const results = queryString ? links.filter(a => {
+            console.log(a)
+            return a.value.startsWith(queryString)
+          }) : links
+          // call callback function to return suggestions
+          cb(results)
+        })
+    },
     openTimber () {
       shell.openExternal(this.timberLink)
     },
@@ -116,10 +132,15 @@ export default {
       let repo = this.todo
       console.log(desDir)
       localStorage.setItem(STUDIO_DIR, this.studioDir)
-      download(repo, desDir, function (err) {
+      download(repo, desDir, err => {
         if (err) {
           remote.dialog.showErrorBox('Sorry, something went wrong :(', String(err))
         } else {
+          this.db.repos
+            .put(({value: repo, lastUsed: new Date().getTime()}))
+            .catch(err => {
+              console.log(err)
+            })
           new Notification('Congratulations', {body: 'Deploy template done'})
         }
       })
@@ -181,5 +202,8 @@ export default {
   .el-input
     margin-top 10px
     margin-bottom  10px
+
+.inline-input
+  width 100%
 
 </style>

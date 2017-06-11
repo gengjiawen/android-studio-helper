@@ -4,6 +4,7 @@
   "description": "An electron-vue project",
   "main": "./dist/main.js",
   "dependencies": {
+    "dexie": "^1.5.1",
     "download-git-repo": "^1.0.1",
     "element-ui": "^1.3.6",
     "fs-extra": "^2.1.2",
