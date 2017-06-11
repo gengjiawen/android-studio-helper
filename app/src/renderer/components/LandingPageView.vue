@@ -20,7 +20,10 @@
       </div>
 
       <div>
-        <h3>Choose your template</h3>
+        <div>
+          <b>Input your template</b>
+          <el-button type="text" @click="openTemplate">Click me to Learn more about Template</el-button>
+        </div>
         <el-input type="text" placeholder="Please input your template, like riggaroo/android-studio-group-templates-mvp"
                   v-model="todo">
           <template slot="append">
@@ -74,6 +77,10 @@ export default {
 
     openTimber () {
       shell.openExternal(this.timberLink)
+    },
+
+    openTemplate () {
+      shell.openExternal('https://riggaroo.co.za/custom-file-template-group-android-studiointellij/')
     },
 
     deployTimber () {
@@ -169,5 +176,7 @@ export default {
   .el-input
     margin-top 10px
     margin-bottom  10px
+  .div
+    display block
 
 </style>
