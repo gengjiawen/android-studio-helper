@@ -11,18 +11,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ${adapterClass} extends RecyclerView.Adapter {
-    List<${itemClass}> ${itemClass?lower_case}List;
+public class ${adapterClass} extends RecyclerView.Adapter<${adapterClass}.${adapterClass}ViewHolder> {
+    private List<${itemClass}> ${itemClass?lower_case}List;
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ${adapterClass}ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.${adapterClass?lower_case}_item, parent, false);
         return new ${adapterClass}ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ${adapterClass}ViewHolder messageViewHolder = (${adapterClass}ViewHolder) holder;
+    public void onBindViewHolder(${adapterClass}ViewHolder holder, int position) {
         ${itemClass} ${itemClass?lower_case} = ${itemClass?lower_case}List.get(position);
     }
 
